@@ -1,0 +1,27 @@
+version: 2.1
+
+jobs:
+  publish_gem:
+    docker:
+      - image: jobseeker/docker-library:ruby-gem-publisher
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
+    working_directory: /source
+    steps:
+      - checkout
+      - run:
+          name: Setup GitHub token
+          command: GITHUB_TOKEN=$GITHUB_PACKAGE_PUBLISH_ACCESS_TOKEN /opt/github_auth.sh
+      - run:
+          name: Build (and release) the gem
+          command: rake -f /opt/Rakefile release
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - publish_gem:
+          context: org-global
+          filters:
+            branches: { only: master }
