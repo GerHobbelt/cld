@@ -27,6 +27,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "ffi", "~> 1.9"
 
-  gem.add_development_dependency "rspec", "~> 2.14.1"
+  gem.add_development_dependency "rspec", "~> 3"
   gem.license = "Nonstandard"
 end
